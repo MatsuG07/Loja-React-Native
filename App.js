@@ -9,13 +9,17 @@ const AnimatedBtn = Animatable.createAnimatableComponent(TouchableOpacity);
 export default function App() {
 
   const [door, setDoor] = useState(false);
+  const [car, setCar] = useState(false);
   const [input, setInput] = useState('');
   const [image, setImage] = useState(false);
   const [link, setLink] = useState('');
   const [descript, setDescript] = useState('');
+
+  const [itens, setItens] = useState([]);
   
+
   function verify(){
-    if (input != 'Gabriel') {alert('Este usuário não existe!');
+    if (input == '') {alert('Este usuário não existe!');
     return;};
 
     setDoor(true);
@@ -24,46 +28,56 @@ export default function App() {
     setImage(true);
     setLink(require('./src/images/pel1.jpg'));
     setDescript('Boneca Rei (Neon Genesis Evangelion) * R$ 89,99');
+    itens.push('Boneca Rei (Neon Genesis Evangelion) * R$ 89,99');
   }
   function grid2(){
     setImage(true);
     setLink(require('./src/images/pel2.jpg'));
     setDescript('Pelúcia Mufasa (Rei leão) * R$ 19,99');
+    itens.push('Pelúcia Mufasa (Rei leão) * R$ 19,99');
+
   }
   function grid3(){
     setImage(true);
     setLink(require('./src/images/pel3.jpg'));
     setDescript('Boneco Senhor Incrível (Os incríveis) * R$ 49,99');
+    itens.push('Boneco Senhor Incrível (Os incríveis) * R$ 49,99');
   }
   function grid4(){
     setImage(true);
     setLink(require('./src/images/pel4.jpg'));
     setDescript('Pelúcia Corona (Se vacina mano) * R$ 29,99');
+    itens.push('Pelúcia Corona (Se vacina mano) * R$ 29,99');
   }
   function grid5(){
     setImage(true);
     setLink(require('./src/images/pel5.jpg'));
     setDescript('Pelúcia Picachu (Pokemon) * R$ 39,99');
+    itens.push('Pelúcia Picachu (Pokemon) * R$ 39,99');
   }
   function grid6(){
     setImage(true);
     setLink(require('./src/images/pel6.jpg'));
     setDescript('Pelúcia Macaco (Macaco) * R$ 17,03');
+    itens.push('Pelúcia Macaco (Macaco) * R$ 17,03');
   }
   function grid7(){
     setImage(true);
     setLink(require('./src/images/pel7.jpg'));
     setDescript('Boneco Pablo (Backardigans) * R$ 69,99');
+    itens.push('Boneco Pablo (Backardigans) * R$ 69,99');
   }
   function grid8(){
     setImage(true);
     setLink(require('./src/images/pel8.jpg'));
     setDescript('Pelúcia Patrick (Bob Esponja) * R$ 34,99');
+    itens.push('Pelúcia Patrick (Bob Esponja) * R$ 34,99');
   }
   function grid9(){
     setImage(true);
     setLink(require('./src/images/pel9.jpg'));
     setDescript('Boneca Abelha sinistra (Inferno) * R$ 24,99');
+    itens.push('Boneca Abelha sinistra (Inferno) * R$ 24,99');
   }
   function endall(){
     setDoor(false);
@@ -96,6 +110,10 @@ export default function App() {
            <Text style={styles.title}>Loja de Pelúcias do Gabriel</Text>
            <Text style={styles.subtitle}> Usuário: {input} </Text>
 
+           <TouchableOpacity onPress={() => setCar(true)} style={styles.head}>
+            <Text style={styles.titleIn}>carrinho</Text>
+          </TouchableOpacity>
+
          <View style={styles.images}>
          <TouchableOpacity onPress={grid1}><Image  source={require('./src/images/pel1.jpg')} style={{height: 100, width: 100, flexDirection: 'row'}} /></TouchableOpacity>
          <Text style={styles.descricao}>R$ 89,99</Text>
@@ -114,10 +132,30 @@ export default function App() {
          <TouchableOpacity onPress={grid8}><Image  source={require('./src/images/pel8.jpg')} style={{height: 100, width: 100, flexDirection: 'row'}} /></TouchableOpacity>
           <Text style={styles.descricao}>R$ 34,99</Text> 
           <TouchableOpacity onPress={grid9}><Image  source={require('./src/images/pel9.jpg')} style={{height: 100, width: 100, flexDirection: 'row'}} /></TouchableOpacity>
-          <Text style={styles.descricao}>R$ 24,99</Text>  
+          <Text style={styles.descricao}>R$ 24,99</Text>
           </View>
 
           <Button title="Encerrar Compra"onPress={ () => endall() }></Button>
+
+       </SafeAreaView>
+     </Modal>
+
+     <Modal animationtype='bounceInUp' transparent={false} visible={car}>
+       <SafeAreaView style={styles.container}>
+        
+           <Text style={styles.title}>Loja de Pelúcias do Gabriel</Text>
+           <Text style={styles.subtitle}> Usuário: {input} </Text>
+           <Button title="Limpar CArrinho"onPress={() => setItens([]) }></Button>
+
+            {itens.map(
+             (x,i) => {return (
+              
+              <Text style={styles.car}>{x}</Text>
+              
+              )}
+            )}
+            
+           <Button title="Fechar Carrinho"onPress={() => setCar(false) }></Button>
 
        </SafeAreaView>
      </Modal>
@@ -219,6 +257,12 @@ const styles = StyleSheet.create({
     color:'#adeada',
     height: 100, 
     width: 100, 
+    flexDirection: 'row',
+    fontSize:25
+  },
+  car:{
+    textAlign:'center',
+    color:'#adeada',
     flexDirection: 'row',
     fontSize:25
   },
